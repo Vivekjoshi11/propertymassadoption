@@ -1,101 +1,207 @@
-import Image from "next/image";
+// "use client";
+
+// import { useState } from "react";
+// import axios from "axios";
+
+// export default function Home() {
+//   const [file, setFile] = useState<File | null>(null);
+//   const [status, setStatus] = useState<string>("");
+//   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+//   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+//     if (event.target.files && event.target.files.length > 0) {
+//       setFile(event.target.files[0]);
+//       setStatus(`Selected file: ${event.target.files[0].name}`);
+//     }
+//   };
+
+//   const handleUpload = async () => {
+//     if (!file) {
+//       setStatus("Please select a CSV file before uploading.");
+//       return;
+//     }
+
+//     const formData = new FormData();
+//     formData.append("file", file);
+
+//     setIsLoading(true);
+//     setStatus("Uploading CSV file and starting scripts...");
+
+//     try {
+//       const response = await axios.post(
+//         "http://localhost:5000/api/scripts/upload-csv",
+//         formData,
+//         {
+//           headers: {
+//             "Content-Type": "multipart/form-data",
+//           },
+//         }
+//       );
+
+//       if (response.data && response.data.message === "Scripts executed successfully!") {
+//         setStatus("All scripts executed successfully!");
+//       } else {
+//         setStatus("Error occurred during script execution.");
+//       }
+//     } catch (error) {
+//       console.error("API Error:", error);
+//       setStatus("Network error occurred. Please check the API server.");
+//     } finally {
+//       setIsLoading(false);
+//     }
+//   };
+
+//   return (
+//     <div className="h-screen w-screen flex items-center justify-center bg-gray-900">
+//       <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
+//         {/* Placeholder Image */}
+//         {/* <img
+//           src="https://via.placeholder.com/150"
+//           alt="Upload Illustration"
+//           className="w-32 h-32 mx-auto mb-4"
+//         /> */}
+
+//         {/* Title */}
+//         <h1 className="text-2xl font-bold text-gray-800 mb-2">
+//           please upload CSV File
+//         </h1>
+//         <p className="text-gray-600 mb-6">
+//           Upload your CSV file to execute the scripts automatically.
+//         </p>
+
+//         {/* File Input */}
+//         <input
+//           type="file"
+//           accept=".csv"
+//           onChange={handleFileChange}
+//           className="block w-full mb-4 border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+//         />
+
+//         {/* Upload Button */}
+//         <button
+//           onClick={handleUpload}
+//           disabled={isLoading}
+//           className={`w-full py-3 px-4 text-white font-bold rounded-md transition ${
+//             isLoading
+//               ? "bg-gray-400 cursor-not-allowed"
+//               : "bg-blue-600 hover:bg-blue-700"
+//           }`}
+//         >
+//           {isLoading ? "Uploading..." : "Upload & Execute"}
+//         </button>
+
+//         {/* Status Message */}
+//         {status && (
+//           <p className="mt-4 text-sm font-medium text-gray-700">{status}</p>
+//         )}
+//       </div>
+//     </div>
+//   );
+// }
+
+
+"use client";
+
+import { useState } from "react";
+import axios from "axios";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [file, setFile] = useState<File | null>(null);
+  const [status, setStatus] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      setFile(event.target.files[0]);
+      setStatus(`Selected file: ${event.target.files[0].name}`);
+    }
+  };
+
+  const handleUpload = async () => {
+    if (!file) {
+      setStatus("Please select a CSV file before uploading.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    setIsLoading(true);
+    setStatus("Uploading CSV file and starting scripts...");
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/scripts/upload-csv",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (response.data && response.data.message === "Scripts executed successfully!") {
+        setStatus("File has been successfully uploaded and scripts executed.");
+      } else {
+        setStatus("Error occurred during script execution.");
+      }
+    } catch (error) {
+      console.error("API Error:", error);
+      setStatus("Network error occurred. Please check the API server.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="h-screen w-screen flex items-center justify-center bg-gray-900">
+      <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
+        {/* Title */}
+        <h1 className="text-2xl font-bold text-gray-800 mb-2">
+          Please Upload CSV File
+        </h1>
+        <p className="text-gray-600 mb-6">
+          Upload your CSV file to execute the scripts automatically.
+        </p>
+
+       {/* File Input with Choose File button on the right */}
+<div className="mb-4 flex items-center w-full border border-gray-300 rounded-md p-2">
+  <input
+    type="file"
+    accept=".csv"
+    onChange={handleFileChange}
+    className="hidden"
+  />
+  <span className="text-sm text-gray-500 truncate max-w-xs">
+    {file ? file.name : "No file chosen"}
+  </span>
+  <button
+    className="ml-auto py-1 px-4 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700"
+    onClick={() => document.querySelector('input[type="file"]')?.click()}
+  >
+    Choose File
+  </button>
+</div>
+
+
+        {/* Upload Button */}
+        <button
+          onClick={handleUpload}
+          disabled={isLoading}
+          className={`w-full py-3 px-4 text-white font-bold rounded-md transition ${
+            isLoading
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-blue-600 hover:bg-blue-700"
+          }`}
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          {isLoading ? "Uploading..." : "Upload & Execute"}
+        </button>
+
+        {/* Status Message */}
+        {status && (
+          <p className="mt-4 text-sm font-medium text-gray-700">{status}</p>
+        )}
+      </div>
     </div>
   );
 }
