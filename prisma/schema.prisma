@@ -1,0 +1,444 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                      Int                       @id @default(autoincrement())
+  createdAt               DateTime                  @default(now()) @db.Timestamp(6)
+  updateAt                DateTime                  @updatedAt @db.Timestamp(6)
+  name                    String
+  email                   String                    @unique
+  blockchainAddress       String                    @unique
+  isAdmin                 Boolean                   @default(false)
+  newsletter              Boolean
+  categoryId              Int
+  phoneNumber             String
+  KYCStatusId             Int                       @default(0)
+  isActive                Boolean                   @default(true)
+  ownedReferralCodeId     Int?                      @unique
+  usedReferralCodeId      Int?
+  password                String?
+  username                String?
+  isUserRewardClaimed     Boolean                   @default(false)
+  Notification            Notification[]
+  RentalToken             RentalToken[]
+  UnclaimedAirspacesOffer UnclaimedAirspacesOffer[]
+  betaUsers               betaUsers?
+  device                  device[]
+  privateDocument         privateDocument[]
+  properties              Property[]
+  publicDocument          publicDocument[]
+  Rent                    Rent[]
+  requestDocuments        requestDocuments[]
+  rewards                 Reward[]
+  solana_transactions     SolanaTransaction[]
+  KYCStatus               Status                    @relation(fields: [KYCStatusId], references: [id])
+  category                Category                  @relation(fields: [categoryId], references: [id])
+  ownedReferralCode       ReferralCode?             @relation("OwnerReferralCodeRelation", fields: [ownedReferralCodeId], references: [id])
+  usedReferralCode        ReferralCode?             @relation("UsedReferralCodeRelation", fields: [usedReferralCodeId], references: [id])
+
+  @@map("users")
+}
+
+model Status {
+  id    Int    @id @default(autoincrement())
+  type  String
+  users User[]
+
+  @@map("status")
+}
+
+model Category {
+  id    Int    @id @default(autoincrement())
+  type  String
+  users User[]
+
+  @@map("category")
+}
+
+model Property {
+  id                        Int            @id @default(autoincrement())
+  createdAt                 DateTime       @default(now()) @db.Timestamp(6)
+  updateAt                  DateTime       @updatedAt @db.Timestamp(6)
+  address                   String
+  ownerId                   Int
+  propertyStatusId          Int            @default(0)
+  hasChargingStation        Boolean
+  hasLandingDeck            Boolean
+  hasStorageHub             Boolean
+  isRentableAirspace        Boolean
+  title                     String
+  transitFee                String
+  noFlyZone                 Boolean        @default(false)
+  isFixedTransitFee         Boolean
+  latitude                  Float
+  longitude                 Float
+  timezone                  String
+  isActive                  Boolean        @default(true)
+  isBoostedArea             Boolean        @default(false)
+  isPropertyRewardClaimed   Boolean        @default(false)
+  isSoftDelete              Boolean        @default(false)
+  fullTimezone              String?
+  assessorParcelNumber      String?
+  hasZoningPermission       Boolean?       @default(false)
+  orderPhotoforGeneratedMap Boolean        @default(false)
+  externalBlockchainAddress String?
+  tokenValue                Float?
+  areaPolygon               String?
+  layers                    Layer[]
+  owner                     User           @relation(fields: [ownerId], references: [id])
+  propertyStatus            PropertyStatus @relation(fields: [propertyStatusId], references: [id])
+  vertexes                  Vertexes[]
+  weekDayRanges             WeekDayRange[]
+
+  @@map("properties")
+}
+
+model PropertyStatus {
+  id         Int        @id @default(autoincrement())
+  type       String
+  properties Property[]
+
+  @@map("property_status")
+}
+
+model Layer {
+  id                   Int                 @id @default(autoincrement())
+  createdAt            DateTime            @default(now()) @db.Timestamp(6)
+  updateAt             DateTime            @updatedAt @db.Timestamp(6)
+  tokenId              String              @unique
+  propertyId           Int
+  isCurrentlyInAuction Boolean             @default(false)
+  auction              auction[]
+  property             Property            @relation(fields: [propertyId], references: [id])
+  offer                offer[]
+  rents                Rent[]
+  solanaTransactions   SolanaTransaction[]
+
+  @@map("layers")
+}
+
+model Vertexes {
+  id           Int      @id @default(autoincrement())
+  createdAt    DateTime @default(now()) @db.Timestamp(6)
+  updateAt     DateTime @updatedAt @db.Timestamp(6)
+  latitude     Float
+  longitude    Float
+  propertyId   Int
+  isSoftDelete Boolean  @default(false)
+  property     Property @relation(fields: [propertyId], references: [id])
+
+  @@map("vertexes")
+}
+
+model Rent {
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now()) @db.Timestamp(6)
+  updateAt   DateTime @updatedAt @db.Timestamp(6)
+  tokenId    String
+  startTime  DateTime
+  endTime    DateTime
+  layerId    Int
+  isActive   Boolean  @default(true)
+  renterId   Int
+  layer      Layer    @relation(fields: [layerId], references: [id])
+  renterUser User     @relation(fields: [renterId], references: [id])
+
+  @@map("rents")
+}
+
+model Newsletter {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updateAt  DateTime @updatedAt @db.Timestamp(6)
+  title     String
+  text      String
+  link      String
+  date      DateTime
+
+  @@map("newsletters")
+}
+
+model WeekDayRange {
+  createdAt   DateTime @default(now()) @db.Timestamp(6)
+  updateAt    DateTime @updatedAt @db.Timestamp(6)
+  fromTime    Float
+  toTime      Float
+  weekDayId   Int
+  propertyId  Int
+  isAvailable Boolean
+  property    Property @relation(fields: [propertyId], references: [id])
+  weekDay     WeekDay  @relation(fields: [weekDayId], references: [id])
+
+  @@id([weekDayId, propertyId])
+  @@map("week_day_range")
+}
+
+model WeekDay {
+  id            Int            @id @default(autoincrement())
+  name          String         @unique
+  weekDayRanges WeekDayRange[]
+
+  @@map("weekdays")
+}
+
+model ReferralCode {
+  id                 Int     @id @default(autoincrement())
+  code               String  @unique
+  codeChanged        Boolean @default(false)
+  ownedByBonusEarned Boolean @default(false)
+  usedByBonusEarned  Boolean @default(false)
+  ownedBy            User?   @relation("OwnerReferralCodeRelation")
+  usedBy             User[]  @relation("UsedReferralCodeRelation")
+
+  @@map("referral_code")
+}
+
+model RentalToken {
+  id                       Int      @id @default(autoincrement())
+  createdAt                DateTime @default(now()) @db.Timestamp(6)
+  updateAt                 DateTime @updatedAt @db.Timestamp(6)
+  startTime                DateTime
+  endTime                  DateTime
+  landTokenId              String
+  rentalTokenId            String?
+  rentalOwnerWalletAddress String?
+  userId                   Int?
+  users                    User?    @relation(fields: [userId], references: [id])
+}
+
+model Reward {
+  id        String   @id @default(cuid())
+  rewardId  String   @unique
+  taskType  TaskType
+  point     Float
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updateAt  DateTime @updatedAt @db.Timestamp(6)
+  email     String
+  user      User     @relation(fields: [email], references: [email])
+
+  @@index([email])
+  @@map("reward")
+}
+
+model NoncePool {
+  id        Int     @id @default(autoincrement())
+  publicKey String  @unique
+  secretKey String
+  isActive  Boolean
+  block     String?
+
+  @@map("nonce_pool")
+}
+
+model SolanaTransaction {
+  id           Int               @id @default(autoincrement())
+  tx           String
+  signature    String
+  status       TransactionStatus
+  callback     Json?
+  pollTime     DateTime
+  pollCount    Int
+  nonceAddress String?
+  landAssetId  String?
+  createdAt    DateTime          @default(now()) @db.Timestamp(6)
+  updateAt     DateTime          @updatedAt @db.Timestamp(6)
+  owner        String
+  layer        Layer?            @relation(fields: [landAssetId], references: [tokenId])
+  users        User              @relation(fields: [owner], references: [blockchainAddress])
+
+  @@map("solana_transactions")
+}
+
+model FlightPath {
+  id             String   @id
+  address        String
+  boundingBox    Json
+  flightName     String
+  flightType     String
+  maxAlt         String
+  startTime      DateTime @default(now())
+  endTime        DateTime @default(now())
+  flightDuration String
+  isPilot        Boolean  @default(false)
+  timeZone       String
+  deleted        Boolean  @default(false)
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updateAt  DateTime @default(now()) @db.Timestamp(6)
+  userId    Int
+  status    String
+  event     String
+  msg       String
+  users     User     @relation(fields: [userId], references: [id])
+}
+
+model UnclaimedAirspacesOffer {
+  id          Int      @id @default(autoincrement())
+  buyerId     Int
+  createdAt   DateTime @default(now()) @db.Timestamp(6)
+  updateAt    DateTime @db.Timestamp(6)
+  offerAmount Int
+  landAddress String
+  latitude    Float
+  longitude   Float
+  signature   String
+  users       User     @relation(fields: [buyerId], references: [id])
+}
+
+model auction {
+  id            Int           @id @default(autoincrement())
+  assetId       String        @db.VarChar(255)
+  seller        String        @db.VarChar(255)
+  pdaAddress    String        @db.VarChar(255)
+  initialPrice  Float
+  endDate       DateTime
+  currentPrice  Float         @default(0)
+  currentBidder String?
+  paymentToken  String        @db.VarChar(255)
+  transactions  String[]
+  isCancelled   Boolean       @default(false)
+  isExecuted    Boolean       @default(false)
+  isFilled      Boolean       @default(false)
+  isVerified    Boolean       @default(false)
+  filledAmount  Float?
+  layers        Layer         @relation(fields: [assetId], references: [tokenId])
+  auction_bid   auction_bid[]
+}
+
+model auction_bid {
+  id          Int       @id @default(autoincrement())
+  price       Float     @default(0)
+  bidder      String
+  transaction String
+  auctionId   Int
+  createdAt   DateTime? @default(now()) @db.Timestamp(6)
+  auction     auction   @relation(fields: [auctionId], references: [id])
+}
+
+model betaUsers {
+  id         String   @id
+  userId     Int      @unique
+  isBetaUser Boolean  @default(false)
+  createdAt  DateTime @default(now()) @db.Timestamp(6)
+  updateAt   DateTime @db.Timestamp(6)
+  users      User     @relation(fields: [userId], references: [id])
+}
+
+model device {
+  id                String   @id
+  userId            Int
+  remoteData        Json
+  ipAddress         String
+  isTest            Boolean  @default(false)
+  createdAt         DateTime @default(now()) @db.Timestamp(6)
+  updateAt          DateTime @db.Timestamp(6)
+  deviceLocationLat String?
+  deviceLocationLng String?
+  rawData           Json?
+  users             User     @relation(fields: [userId], references: [id])
+}
+
+model offer {
+  id           Int       @id @default(autoincrement())
+  assetId      String    @db.VarChar(255)
+  buyer        String    @db.VarChar(255)
+  pdaAddress   String    @db.VarChar(255)
+  price        Float
+  paymentToken String    @db.VarChar(255)
+  transactions String[]
+  isCancelled  Boolean   @default(false)
+  isAccepted   Boolean   @default(false)
+  createdAt    DateTime? @default(now()) @db.Timestamp(6)
+  layers       Layer     @relation(fields: [assetId], references: [tokenId])
+}
+
+model privateDocument {
+  id                Int      @id @default(autoincrement())
+  filePath          String   @unique
+  userId            Int
+  requestDocumentId Int
+  createdAt         DateTime @default(now()) @db.Timestamp(6)
+  updateAt          DateTime @db.Timestamp(6)
+  users             User     @relation(fields: [userId], references: [id])
+}
+
+model property_verifications {
+  id                     Int      @id @default(autoincrement())
+  propertyId             Int      @unique
+  polygonSpec            Json
+  buildingInfo           Json
+  overtureMatchAttempted Boolean  @default(false)
+  createdAt              DateTime @default(now()) @db.Timestamp(6)
+  updateAt               DateTime @db.Timestamp(6)
+}
+
+model publicDocument {
+  id          Int      @id @default(autoincrement())
+  filePath    String   @unique
+  userId      Int
+  createdAt   DateTime @default(now()) @db.Timestamp(6)
+  updateAt    DateTime @db.Timestamp(6)
+  referenceId String
+  users       User     @relation(fields: [userId], references: [id])
+}
+
+model requestDocuments {
+  id          Int                        @id @default(autoincrement())
+  userId      Int
+  actionType  RequestDocumentActionType
+  status      RequestDocumentStatus      @default(NOT_SUBMITTED)
+  referenceId Int
+  dateCreated DateTime                   @default(now())
+  dateUpdated DateTime
+  description RequestDocumentDescription
+  users       User                       @relation(fields: [userId], references: [id])
+}
+
+model transaction_history {
+  id        Int      @id @default(autoincrement())
+  signature String   @unique
+  tags      String[]
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+}
+
+enum TaskType {
+  REFERRAL_REWARD_NO_KYC
+  ACCOUNT_REGISTRATION_NO_KYC
+  FULL_AIRSPACE_CLAIM_BOOSTED
+  FULL_AIRSPACE_CLAIM_NON_BOOSTED
+  FULL_AIRSPACE_REFERRER_BOOSTED
+  FULL_AIRSPACE_REFERRER_NON_BOOSTED
+  ACCOUNT_REGISTRATION_WITH_KYC
+}
+
+enum TransactionStatus {
+  Pending
+  Processing
+  Complete
+  Failed
+}
+
+enum RequestDocumentActionType {
+  KYC
+  PROPERTY
+}
+
+enum RequestDocumentDescription {
+  PROOF_OF_OWNERSHIP
+}
+
+enum RequestDocumentStatus {
+  NOT_SUBMITTED
+  SUBMITTED
+  APPROVED
+  REJECTED
+}
