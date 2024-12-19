@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-function-type */
 
-
-
 import { NextApiRequest, NextApiResponse } from 'next';
 import multer from 'multer';
 import path from 'path';
@@ -26,6 +24,16 @@ function runMiddleware(req: NextApiRequest, res: NextApiResponse, fn: Function) 
       return resolve(result);
     });
   });
+}
+
+// Function to log errors to a file
+function logErrorToFile(error: any) {
+  const logFilePath = path.join(process.cwd(), 'errorLogs', 'error-log.txt');
+  if (!fs.existsSync(path.dirname(logFilePath))) {
+    fs.mkdirSync(path.dirname(logFilePath), { recursive: true });
+  }
+  const errorMessage = `[${new Date().toISOString()}] - Error: ${error}\n`;
+  fs.appendFileSync(logFilePath, errorMessage);
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -89,9 +97,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     res.status(200).json({ message: 'CSV processed and scripts executed successfully!' });
   } catch (error) {
     console.error('Error processing CSV:', error);
+
+    // Log the error to a file
+    logErrorToFile(error);
+
     res.status(500).json({ message: 'An error occurred during processing.', error });
   } finally {
-    // Optional: Clean up uploaded file
     fs.unlinkSync(uploadedFilePath);
   }
 }
