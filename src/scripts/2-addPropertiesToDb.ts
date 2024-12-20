@@ -53,18 +53,9 @@ async function addProperties(): Promise<void> {
                 longitude,
                 vertexes: { create: [{ latitude, longitude }] },
                 owner: {
-                    connectOrCreate: {
-                        where: { blockchainAddress: "BXe1hSS7Sbgy2t2PaVxevwnmQZhA5axJaYykVHcsCShZ" },
-                        create: {
-                            name: "Sobha",
-                            email: "sobhakhadka98@gmail.com",
-                            blockchainAddress: "BXe1hSS7Sbgy2t2PaVxevwnmQZhA5axJaYykVHcsCShZ",
-                            newsletter: true,
-                            phoneNumber: "+17655023339",
-                            category: {
-                                connect: { id: 1 }, 
-                            },
-                        },
+                    connect: {
+                        blockchainAddress: "BXe1hSS7Sbgy2t2PaVxevwnmQZhA5axJaYykVHcsCShZ" 
+                       
                     },
                 },
             },
