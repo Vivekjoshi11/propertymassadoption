@@ -13,6 +13,8 @@ pnpm dev
 # or
 bun dev
 ```
+enter .csv file for process.
+and add .env.locl file for run it locally.
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
