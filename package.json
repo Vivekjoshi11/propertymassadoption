@@ -49,6 +49,7 @@
     "prisma": "^6.0.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-toastify": "^11.0.2",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^6.0.1",
     "rpc-websockets": "9.0.1",

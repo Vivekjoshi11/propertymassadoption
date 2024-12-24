@@ -1,4 +1,452 @@
 [
-    { "blockchainAddress": "fdfsdfsdfsd", "address": "fssfsfs", "id": 4 },
-    { "blockchainAddress": "fdfsdfsdfsd", "address": "fssfsfs", "id": 4 }
+  {
+    "id": 2636,
+    "address": "375 Depot Rd, Village of Clarkston, MI 48346, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.42003,
+    "latitude": 42.734168
+  },
+  {
+    "id": 2637,
+    "address": "263 E 4th St, Davison, MI 48423, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.515584,
+    "latitude": 43.033998
+  },
+  {
+    "id": 2638,
+    "address": "317 Shoppers Aly, Davison, MI 48423, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.515863,
+    "latitude": 43.032245
+  },
+  {
+    "id": 2639,
+    "address": "806 N Saginaw St, Holly, MI 48442, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.627089,
+    "latitude": 42.800411
+  },
+  {
+    "id": 2640,
+    "address": "216 S Broad St, Holly, MI 48442, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.626643,
+    "latitude": 42.790294
+  },
+  {
+    "id": 2641,
+    "address": "105 2nd St, Holly, MI 48442, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.6315,
+    "latitude": 42.79355
+  },
+  {
+    "id": 2642,
+    "address": "159 N Main St, Milford, MI 48381, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.60106,
+    "latitude": 42.58855
+  },
+  {
+    "id": 2643,
+    "address": "45255 W 10 Mile Rd, Novi, MI 48375, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.491854,
+    "latitude": 42.465425
+  },
+  {
+    "id": 2644,
+    "address": "11 Pond St, Ortonville, MI 48462, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.443693,
+    "latitude": 42.852091
+  },
+  {
+    "id": 2645,
+    "address": "15 Stanton St, Oxford, MI 48371, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.26228,
+    "latitude": 42.823883
+  },
+  {
+    "id": 2646,
+    "address": "19 W Burdick St, Oxford, MI 48371, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.266507,
+    "latitude": 42.825098
+  },
+  {
+    "id": 2647,
+    "address": "2 Hudson St, Oxford, MI 48371, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.265805,
+    "latitude": 42.824596
+  },
+  {
+    "id": 2648,
+    "address": "31 E Burdick St, Oxford, MI 48371, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.264001,
+    "latitude": 42.824781
+  },
+  {
+    "id": 2649,
+    "address": "415 N Liberty St, Belleville, MI 48111, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.489749,
+    "latitude": 42.20897
+  },
+  {
+    "id": 2650,
+    "address": "167 4th St, Belleville, MI 48111, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.491484,
+    "latitude": 42.207578
+  },
+  {
+    "id": 2651,
+    "address": "4 S Liberty St, Belleville, MI 48111, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.484428,
+    "latitude": 42.205407
+  },
+  {
+    "id": 2652,
+    "address": "539 Savage Rd, Van Buren Charter Township, MI 48111, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.477173,
+    "latitude": 42.203313
+  },
+  {
+    "id": 2653,
+    "address": "118 N State St, Big Rapids, MI 49307, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -85.48324,
+    "latitude": 43.69922
+  },
+  {
+    "id": 2654,
+    "address": "39400 Woodward Ave, Bloomfield Hills, MI 48304, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.240931,
+    "latitude": 42.581241
+  },
+  {
+    "id": 2655,
+    "address": "29995 W 12 Mile Rd, Farmington Hills, MI 48334, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.346472,
+    "latitude": 42.498187
+  },
+  {
+    "id": 2656,
+    "address": "251 E Grand River Ave, Howell, MI 48843, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.925028,
+    "latitude": 42.605489
+  },
+  {
+    "id": 2657,
+    "address": "27400 Southfield Rd, Lathrup Village, MI 48076, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.221377,
+    "latitude": 42.491466
+  },
+  {
+    "id": 2658,
+    "address": "32777 Five Mile Rd, Livonia, MI 48154, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.368076,
+    "latitude": 42.396369
+  },
+  {
+    "id": 2659,
+    "address": "36230 W Seven Mile Rd, Livonia, MI 48152, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.40691,
+    "latitude": 42.42539
+  },
+  {
+    "id": 2660,
+    "address": "15100 Hubbard St, Livonia, MI 48154, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.362314,
+    "latitude": 42.396365
+  },
+  {
+    "id": 2661,
+    "address": "2795 Seymour Lake Rd, Oxford, MI 48371, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.325338,
+    "latitude": 42.820621
+  },
+  {
+    "id": 2662,
+    "address": "127 N Wells St, South Lyon, MI 48178, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.650745,
+    "latitude": 42.461448
+  },
+  {
+    "id": 2663,
+    "address": "220 Whipple St, South Lyon, MI 48178, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.652019,
+    "latitude": 42.461489
+  },
+  {
+    "id": 2664,
+    "address": "390 S Lafayette St, South Lyon, MI 48178, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.651718,
+    "latitude": 42.458202
+  },
+  {
+    "id": 2665,
+    "address": "502 Washington St, South Lyon, MI 48178, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.65277,
+    "latitude": 42.456571
+  },
+  {
+    "id": 2666,
+    "address": "300 Dorothy St, South Lyon, MI 48178, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.653495,
+    "latitude": 42.45478
+  },
+  {
+    "id": 2667,
+    "address": "24800 Jefferson Ave, St Clair Shores, MI 48080, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -82.886251,
+    "latitude": 42.474318
+  },
+  {
+    "id": 2668,
+    "address": "20700 Brys Dr, St Clair Shores, MI 48080, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -82.918378,
+    "latitude": 42.452826
+  },
+  {
+    "id": 2669,
+    "address": "20000 Stephens Rd, St Clair Shores, MI 48080, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -82.914102,
+    "latitude": 42.471722
+  },
+  {
+    "id": 2670,
+    "address": "22185 Masonic, St Clair Shores, MI 48082, United States",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -82.89476,
+    "latitude": 42.533225
+  },
+  {
+    "id": 2671,
+    "address": "32400 Jefferson Ave, St Clair Shores, MI 48082, United States",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -82.872539,
+    "latitude": 42.527387
+  },
+  {
+    "id": 2672,
+    "address": "37500 Schoenherr Rd, Sterling Heights, MI 48312, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -82.988593,
+    "latitude": 42.571055
+  },
+  {
+    "id": 2673,
+    "address": "12850 15 Mile Rd, Sterling Heights, MI 48312, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -82.996672,
+    "latitude": 42.5516
+  },
+  {
+    "id": 2674,
+    "address": "40555 Utica Rd, Sterling Heights, MI 48313, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.012684,
+    "latitude": 42.591758
+  },
+  {
+    "id": 2675,
+    "address": "40250 Dodge Park Rd, Sterling Heights, MI 48313, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.009983,
+    "latitude": 42.590031
+  },
+  {
+    "id": 2676,
+    "address": "3001 18 Mile Rd, Sterling Heights, MI 48314, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.075802,
+    "latitude": 42.597137
+  },
+  {
+    "id": 2677,
+    "address": "41625 Ryan Rd, Sterling Heights, MI 48314, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.072059,
+    "latitude": 42.597852
+  },
+  {
+    "id": 2678,
+    "address": "40620 Dodge Park Rd, Sterling Heights, MI 48313, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.011152,
+    "latitude": 42.591331
+  },
+  {
+    "id": 2679,
+    "address": "7200 18 Mile Rd, Sterling Heights, MI 48314, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.03701,
+    "latitude": 42.5939
+  },
+  {
+    "id": 2680,
+    "address": "2775 15 Mile Rd, Sterling Heights, MI 48310, United States",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.079561,
+    "latitude": 42.552676
+  },
+  {
+    "id": 2681,
+    "address": "40200 Utica Rd, Sterling Heights, MI 48313, United States",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.00812,
+    "latitude": 42.59132
+  },
+  {
+    "id": 2682,
+    "address": "107 Ferris St, Ypsilanti, MI 48197, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.613924,
+    "latitude": 42.23968
+  },
+  {
+    "id": 2683,
+    "address": "16 N Adams St, Ypsilanti, MI 48197, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.615556,
+    "latitude": 42.2417
+  },
+  {
+    "id": 2684,
+    "address": "29 N Huron St, Ypsilanti, MI 48197, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.613103,
+    "latitude": 42.241314
+  },
+  {
+    "id": 2685,
+    "address": "100 Market Pl, Ypsilanti, MI 48198, USA",
+    "owner": {
+      "blockchainAddress": "9NQQxwoxA2uUgJgdyJXEsLEYaHhAqcK2uHDdBPDyNbJp"
+    },
+    "longitude": -83.610112,
+    "latitude": 42.246777
+  }
 ]

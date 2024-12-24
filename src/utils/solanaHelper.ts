@@ -16,9 +16,7 @@ import {
     sendAndConfirmTransaction,
 } from '@solana/web3.js'
 import { AnchorProvider, Program, Wallet, web3 } from '@coral-xyz/anchor'
-// import { IDL, PropertyLayer } from './types/PropertyLayer'
-import { IDL, PropertyLayer } from '../types/PropertyLayer';
-
+import { IDL, PropertyLayer } from '../types/PropertyLayer'
 import { configs } from '../configs'
 import {
     MPL_BUBBLEGUM_PROGRAM_ID,
@@ -52,8 +50,7 @@ import {
     ipfsVertexesAttributes,
     JSONMetadata,
     offChainMetadata,
-} from '../types/ICustomRequest';
-
+} from "../types/ICustomRequest"
 import { join } from 'path'
 const prisma = new PrismaClient()
 const centralizedAccKeypairPath = process.env.centralizedAccKeypairPath as string
@@ -95,9 +92,12 @@ const program = new Program(
     provider
 ) as unknown as Program<PropertyLayer>
 
-export async function getMetaDataObject(propertyId: number) {
+export async function getMetaDataObject(address: string) {
     const property = await prisma.property.findFirst({
-        where: { id: propertyId, propertyStatusId: 0 },
+        where: {
+            address,
+            propertyStatusId: 0,
+        },
     })
 
     if (!property) {
@@ -105,7 +105,7 @@ export async function getMetaDataObject(propertyId: number) {
     }
 
     const vertexes = await prisma.vertexes.findMany({
-        where: { propertyId: propertyId },
+        where: { propertyId: property!.id },
     })
 
     let externalUrl = ''
@@ -126,16 +126,16 @@ export async function getMetaDataObject(propertyId: number) {
     }
 
     const layerMetadata: JSONMetadata = {
-        name: `${configs.LAND_TOKEN_NAME} ${property.address}`,
-        description: `An airspace layer of the ${property.address} property.`,
+        name: `${configs.LAND_TOKEN_NAME} ${property!.address}`,
+        description: `An airspace layer of the ${property!.address} property.`,
         external_url: externalUrl,
         attributes: ipfsVertexesAttributes, // todo:  worry about the scenarios where we don't have vertexes? or the back office should take care of it?
     }
 
     const offChainMetadata: offChainMetadata = {
-        name: `${property.address}`,
+        name: `${property!.address}`,
         symbol: `${configs.LAND_TOKEN_SYMBOL}`,
-        description: `An airspace layer of the ${property.address} property.`,
+        description: `An airspace layer of the ${property!.address} property.`,
         image: 'https://docs.sky.trade/logo-square.jpg',
         external_url: 'https://sky.trade',
         metadata: layerMetadata,
@@ -144,57 +144,86 @@ export async function getMetaDataObject(propertyId: number) {
     return offChainMetadata
 }
 
-export async function fetchNonce(nonceAccountAddress: PublicKey) {
-    let nonceAccount = await connection.getAccountInfo(
-        NonceAccountKeypair.publicKey
-    )
+export async function fetchNonce(
+    nonceAccountAddress: PublicKey,
+    previousBlockhash: string
+) {
+    console.log({ previousBlockhash })
+    let nonceAccount = undefined
     let c = 0
-    while (nonceAccount?.data == undefined) {
+    let isLoop = true
+    while (isLoop) {
+        await new Promise((resolve) => setTimeout(resolve, 2000))
         c++
-        if (c >= 10) {
+        if (c >= 150) {
             break
         }
         nonceAccount = await connection.getAccountInfo(nonceAccountAddress)
+        if (!nonceAccount) {
+            continue
+        }
+        const nonce = NonceAccount.fromAccountData(nonceAccount?.data as Buffer)
+        if (nonce.nonce != previousBlockhash) {
+            isLoop = false
+            return { nonce, previousBlockhash }
+        }
         //sleep for 2s
-
-        await new Promise((resolve) => setTimeout(resolve, 2000))
+        console.log('sleeps for 2')
     }
-    const nonce = NonceAccount.fromAccountData(nonceAccount?.data as Buffer)
-
-    return nonce
 }
-export async function doNonceAdvanceTX() {
-    const instruction = SystemProgram.nonceAdvance({
-        authorizedPubkey: centralizedAccountKeypair.publicKey,
-        noncePubkey: NonceAccountKeypair.publicKey,
-    })
+export async function doNonceAdvanceTX(previousBlockhash: string) {
+    let isLoop = true
+    do {
+        try {
+            const instruction = SystemProgram.nonceAdvance({
+                authorizedPubkey: centralizedAccountKeypair.publicKey,
+                noncePubkey: NonceAccountKeypair.publicKey,
+            })
 
-    const tx = new Transaction()
-    tx.add(instruction)
+            const tx = new Transaction()
+            tx.add(instruction)
 
-    const ans = await sendAndConfirmTransaction(connection, tx, [
-        centralizedAccountKeypair,
-    ])
-    console.log(ans)
+            const ans = await sendAndConfirmTransaction(connection, tx, [
+                centralizedAccountKeypair,
+            ])
+            console.log(ans)
+
+            isLoop = false
+            const ans2 = await fetchNonce(
+                NonceAccountKeypair.publicKey,
+                previousBlockhash
+            )
+
+            return { nonce: ans2?.nonce, previousBlockhash }
+        } catch (error) {
+            console.log('nonce error', error)
+        }
+    } while (isLoop)
 }
-export const convertToTx = async (instructions: TransactionInstruction[]) => {
-    const { nonce } = await fetchNonce(NonceAccountKeypair.publicKey)
-    const blockhash = nonce
+export const convertToTx = async (
+    instructions: TransactionInstruction[],
+    previousBlockhash: string
+) => {
+    //let ans = await doNonceAdvanceTX(previousBlockhash)
+    // let ans = await fetchNonce(NonceAccountKeypair.publicKey, previousBlockhash)
 
-    const nonceAdvIx = SystemProgram.nonceAdvance({
-        authorizedPubkey: centralizedAccountKeypair.publicKey,
-        noncePubkey: NonceAccountKeypair.publicKey,
-    })
+    // let nonce = ans?.nonce?.nonce
+    // const blockhash = nonce as string
+    // console.log('blockhash added', nonce)
+    // let nonceAdvIx = SystemProgram.nonceAdvance({
+    //     authorizedPubkey: centralizedAccountKeypair.publicKey,
+    //     noncePubkey: NonceAccountKeypair.publicKey,
+    // })
 
     const messageV0 = new anchor.web3.TransactionMessage({
         payerKey: centralizedAccountKeypair.publicKey,
-        recentBlockhash: blockhash,
-        instructions: [nonceAdvIx, ...instructions],
+        recentBlockhash: previousBlockhash,
+        instructions: [...instructions],
     }).compileToV0Message()
 
     const transaction = new anchor.web3.VersionedTransaction(messageV0)
 
-    return transaction
+    return { transaction, previousBlockhash: previousBlockhash }
 }
 
 export const pinFilesToIPFS = async (metadata: any) => {
@@ -227,7 +256,7 @@ export const pinFilesToIPFS = async (metadata: any) => {
     )
 
     const cid = res.data['IpfsHash']
-
+    console.log({ cid })
     return cid
 }
 export const getPriorityFeeIx = async () => {
@@ -253,7 +282,8 @@ export async function MintTokenSendAndConfirm(
     address: string,
     baseUri: string,
     merkle_tree: PublicKey,
-    recipient: PublicKey
+    recipient: PublicKey,
+    previousBlockhash: string
 ) {
     const dataAccount = PublicKey.findProgramAddressSync(
         [Buffer.from('data_account')],
@@ -327,22 +357,43 @@ export async function MintTokenSendAndConfirm(
 
     const priorityIx = await getPriorityFeeIx()
 
-    const tx = await convertToTx([priorityIx, ix])
-    tx.sign([centralizedAccountKeypair])
+    const txWithPreviousBh = await convertToTx(
+        [priorityIx, ix],
+        previousBlockhash
+    )
+
+    txWithPreviousBh.transaction.sign([centralizedAccountKeypair])
 
     try {
-        const sendRawTx = await provider.connection.sendTransaction(tx)
+        const sendRawTx = await provider.connection.sendTransaction(
+            txWithPreviousBh.transaction
+        )
 
-        return sendRawTx
+        return {
+            signature: sendRawTx,
+            status: 'pending',
+            // previousBlockhash: txWithPreviousBh.previousBlockhash,
+        }
     } catch (error) {
         console.log(error)
-        throw Error('Failed to complete mint tx:')
+        // throw Error('Failed to complete mint tx:')
+
+        return {
+            signature: null,
+            status: 'failed',
+        }
     }
 }
 
 export async function confirmTx(allSigs: any) {
-    const updatedSigs = []
+    if (allSigs.length == 0) {
+        return
+    }
+
     for (let i = 0; i < allSigs.length; i++) {
+        if (allSigs[i].confirmed == true || allSigs[i].signature == 'failed') {
+            continue
+        }
         const signature = allSigs[i].signature as string
         const tx0 = await connection.getTransaction(signature, {
             commitment: 'finalized',
@@ -351,7 +402,6 @@ export async function confirmTx(allSigs: any) {
         if (tx0) {
             allSigs[i].confirmed = true
         }
-        updatedSigs.push(allSigs[i])
     }
     writeFileSync(
         join(__dirname, '../result/signatures.json'),
@@ -407,3 +457,5 @@ export const findLeafIndexFromUmiTx = (txInfo: TransactionWithMeta | null) => {
     //
     return assetId
 }
+
+export { umi }

@@ -1,12 +1,45 @@
+// import 'dotenv/config'
+
+// const {
+//     WEB_STORAGE_TOKEN,
+//     ANCHOR_WALLET,
+//     RPC_URL,
+//     PROPERTY_LAYER_ID,
+//     LAND_MERKLE_TREE_ADDRESS,
+//     NONCE_ACCOUNT_ADDRESS,
+//     COLLECTION_MINT_ADDRESS,
+//     LAND_TOKEN_NAME,
+//     LAND_TOKEN_SYMBOL,
+//     IPFS_GATEWAY,
+//     NFT_IMAGE_URL,
+// } = process.env
+
+// export const configs = {
+//     WEB3_HEADER: { t: 'sip99' },
+//     WEB3_NETWORK: 'solana',
+//     PROPERTY_LAYER_ID: PROPERTY_LAYER_ID
+//         ? PROPERTY_LAYER_ID
+//         : '9TowmMdVcRaCYsK3VBAqcY9oBXK2gNZoMpfPoTKcFdSK',
+//     LAND_MERKLE_TREE_ADDRESS,
+//     NONCE_ACCOUNT_ADDRESS,
+//     RPC_URL: RPC_URL ? RPC_URL : 'https://api.devnet.solana.com',
+//     WEB_STORAGE_TOKEN,
+//     ANCHOR_WALLET,
+//     COLLECTION_MINT_ADDRESS,
+//     LAND_TOKEN_NAME,
+//     LAND_TOKEN_SYMBOL,
+//     IPFS_GATEWAY,
+//     NFT_IMAGE_URL,
+// }
+
+
 import 'dotenv/config'
 
 const {
     WEB_STORAGE_TOKEN,
-    ANCHOR_WALLET,
     RPC_URL,
     PROPERTY_LAYER_ID,
     LAND_MERKLE_TREE_ADDRESS,
-    NONCE_ACCOUNT_ADDRESS,
     COLLECTION_MINT_ADDRESS,
     LAND_TOKEN_NAME,
     LAND_TOKEN_SYMBOL,
@@ -21,10 +54,8 @@ export const configs = {
         ? PROPERTY_LAYER_ID
         : '9TowmMdVcRaCYsK3VBAqcY9oBXK2gNZoMpfPoTKcFdSK',
     LAND_MERKLE_TREE_ADDRESS,
-    NONCE_ACCOUNT_ADDRESS,
     RPC_URL: RPC_URL ? RPC_URL : 'https://api.devnet.solana.com',
     WEB_STORAGE_TOKEN,
-    ANCHOR_WALLET,
     COLLECTION_MINT_ADDRESS,
     LAND_TOKEN_NAME,
     LAND_TOKEN_SYMBOL,
