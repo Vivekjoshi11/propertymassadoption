@@ -1,0 +1,22 @@
+[2024-12-24T02:36:03.377Z] ERROR: Error in Step 3: Running 3-mintTx.js: Command failed: ts-node ./src/scripts/3-mintTx.ts
+D:\skyproperty\propertymassadoption\node_modules\ts-node\src\index.ts:859
+    return new TSError(diagnosticText, diagnosticCodes, diagnostics);
+           ^
+TSError: ⨯ Unable to compile TypeScript:
+src/scripts/3-mintTx.ts(127,64): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+src/scripts/3-mintTx.ts(141,21): error TS2345: Argument of type 'string' is not assignable to parameter of type 'PublicKey'.
+
+    at createTSError (D:\skyproperty\propertymassadoption\node_modules\ts-node\src\index.ts:859:12)
+    at reportTSError (D:\skyproperty\propertymassadoption\node_modules\ts-node\src\index.ts:863:19)
+    at getOutput (D:\skyproperty\propertymassadoption\node_modules\ts-node\src\index.ts:1077:36)
+    at Object.compile (D:\skyproperty\propertymassadoption\node_modules\ts-node\src\index.ts:1433:41)
+    at Module.m._compile (D:\skyproperty\propertymassadoption\node_modules\ts-node\src\index.ts:1617:30)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1691:10)
+    at Object.require.extensions.<computed> [as .ts] (D:\skyproperty\propertymassadoption\node_modules\ts-node\src\index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1317:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:1127:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:315:14) {
+  diagnosticCodes: [ 2345, 2345 ]
+}
+
+[2024-12-24T02:36:03.488Z] ERROR: General error: Execution halted during Step 3: Running 3-mintTx.js.
