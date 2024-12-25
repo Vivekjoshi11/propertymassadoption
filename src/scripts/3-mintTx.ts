@@ -1,84 +1,5 @@
-// import dotenv from 'dotenv';
-// dotenv.config({ path: './.env.local' });
 
-// import fs from 'fs';
-// import { join } from 'path';
-// import { Keypair, PublicKey } from '@solana/web3.js';
-// import { configs } from '../configs';
-// import {
-//     getMetaDataObject,
-//     MintTokenSendAndConfirm,
-//     pinFilesToIPFS,
-// } from '../utils/solanaHelper';
 
-// // Load environment variable for keypair path
-// const keypairPath = process.env.centralizedAccKeypairPath;
-// if (!keypairPath) {
-//     throw new Error('centralizedAccKeypairPath is not defined in the environment variables.');
-// }
-
-// console.log('centralizedAccKeypairPath:', keypairPath);
-
-// // Read and parse the keypair file
-// const keypairData = JSON.parse(fs.readFileSync(keypairPath, 'utf-8'));
-// const uint8Keypair = new Uint8Array(keypairData);
-// const keypair = Keypair.fromSecretKey(uint8Keypair);
-
-// console.log('Public Key:', keypair.publicKey.toString());
-// console.log('Private Key:', keypair.secretKey);
-
-// if (!configs.LAND_MERKLE_TREE_ADDRESS) {
-//     throw new Error('LAND_MERKLE_TREE_ADDRESS is not defined in the configuration.');
-// }
-
-// const landMerkleTree = new PublicKey(configs.LAND_MERKLE_TREE_ADDRESS);
-
-// async function main(): Promise<void> {
-//     try {
-//         // Load properties to mint from JSON file
-//         const addressesToMint = JSON.parse(
-//             fs.readFileSync(
-//                 join(__dirname, '../result/dbPropertiesTomint.json'),
-//                 'utf-8'
-//             )
-//         );
-
-//         for (const address of addressesToMint) {
-//             try {
-//                 console.log('propertyId=', address.id);
-
-//                 const pinataMetadata = await getMetaDataObject(address.id);
-//                 const cid = await pinFilesToIPFS(pinataMetadata);
-//                 const baseUri = cid ? `${configs.IPFS_GATEWAY}/ipfs/${cid}` : '';
-
-//                 const landOwnerAddress = address.blockchainAddress;
-//                 const txSig = await MintTokenSendAndConfirm(
-//                     address.address,
-//                     baseUri,
-//                     landMerkleTree,
-//                     landOwnerAddress
-//                 );
-
-//                 const signaturesPath = join(__dirname, '../result/signatures.json');
-//                 const allSigs = JSON.parse(fs.readFileSync(signaturesPath, 'utf-8'));
-//                 const sigObj = { ...address, signature: txSig, confirmed: false };
-
-//                 allSigs.push(sigObj);
-//                 fs.writeFileSync(signaturesPath, JSON.stringify(allSigs, null, 2));
-//             } catch (error) {
-//                 console.error(`Error processing address ${address.id}:`, error);
-//             }
-//         }
-//     } catch (error) {}
-// }
-
-// main()
-//     .then(() => {
-//         console.log('Script completed successfully.');
-//     })
-//     .catch((err) => {
-//         console.error('Error occurred:', err);
-//     });
 import { PublicKey } from '@solana/web3.js'
 import { configs } from '../configs'
 import {
@@ -91,6 +12,7 @@ import { readFileSync, writeFileSync } from 'fs'
 //todo :: add check for unique address to mint from sig file
 import { decode } from '@coral-xyz/anchor/dist/cjs/utils/bytes/bs58'
 import { umi } from '../utils/solanaHelper'
+console.log("SOLANA_PUBLIC_KEY from environment:", process.env.SOLANA_PUBLIC_KEY);
 
 type addressesToMint = {
     id: number
@@ -337,7 +259,87 @@ async function main() {
         logSuccess(passedCases)
     }
 
+    // let allSigs = JSON.parse(
+    //     readFileSync(join(__dirname, '../../result/signatures.json'), 'utf-8')
+    // )
+    // console.log({ allSigs: allSigs.length })
+    // let addressTomintArray: Array<addressesToMint> = []
+    // if (allSigs.length == 0) {
+    //     addressTomintArray = addressesToMint
+    // } else {
+    //     console.log('here')
+    //     addressTomintArray = await checkUniqueAddress(addressesToMint, allSigs)
+    // }
 
+    // console.log({ addressTomintArray: addressTomintArray.length })
+
+    // let previousBlockhash = ''
+    // for (let i = 0; i < addressTomintArray.length; i++) {
+    //     try {
+    //         console.log('propertyId=', addressTomintArray[i].id)
+    //         let pinataMetadata = await getMetaDataObject(
+    //             addressTomintArray[i].id
+    //         )
+    //         let cid = await pinFilesToIPFS(pinataMetadata)
+    //         const baseUri =
+    //             cid != '' ? `${configs.IPFS_GATEWAY}/ipfs/${cid}` : ''
+
+    //         let landMerkleTree = new PublicKey(
+    //             configs.LAND_MERKLE_TREE_ADDRESS as string
+    //         )
+    //         let landOwnerAddress = new PublicKey(
+    //             addressTomintArray[i].owner.blockchainAddress
+    //         )
+    //         let mintReturnObj = await MintTokenSendAndConfirm(
+    //             addressTomintArray[i].address,
+    //             baseUri,
+    //             landMerkleTree,
+    //             landOwnerAddress,
+    //             previousBlockhash
+    //         )
+    //         previousBlockhash = mintReturnObj.previousBlockhash as string
+    //         let allSigs = JSON.parse(
+    //             readFileSync(
+    //                 join(__dirname, '../../result/signatures.json'),
+    //                 'utf-8'
+    //             )
+    //         )
+
+    //         let sigObj = {
+    //             ...addressTomintArray[i],
+    //             signature: mintReturnObj.sendRawTx,
+    //             confirmed: false,
+    //             layerAdded: false,
+    //         }
+    //         allSigs.push(sigObj)
+
+    //         writeFileSync(
+    //             join(__dirname, '../../result/signatures.json'),
+    //             JSON.stringify(allSigs)
+    //         )
+    //     } catch (error) {
+    //         console.log('mint error', error, i)
+    //         let allSigs = JSON.parse(
+    //             readFileSync(
+    //                 join(__dirname, '../../result/signatures.json'),
+    //                 'utf-8'
+    //             )
+    //         )
+
+    //         let sigObj = {
+    //             ...addressTomintArray[i],
+    //             signature: 'failed',
+    //             confirmed: false,
+    //             layerAdded: false,
+    //         }
+    //         allSigs.push(sigObj)
+
+    //         writeFileSync(
+    //             join(__dirname, '../../result/signatures.json'),
+    //             JSON.stringify(allSigs)
+    //         )
+    //     }
+    // }
 }
 
 main()
