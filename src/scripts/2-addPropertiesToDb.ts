@@ -118,6 +118,7 @@ async function addProperties() {
             longitude: property.longitude,
             latitude: property.latitude,
         }))
+        console.log(formattedResult)
 
         // Write the result to a file in the desired format
         writeFileSync(
