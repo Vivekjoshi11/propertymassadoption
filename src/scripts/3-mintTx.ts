@@ -1,7 +1,3 @@
-
-
-
-
 import { PublicKey } from '@solana/web3.js';
 import { configs } from '../configs';
 import {
@@ -14,7 +10,7 @@ import { readFileSync, writeFileSync } from 'fs';
 import { decode } from '@coral-xyz/anchor/dist/cjs/utils/bytes/bs58';
 import { umi } from '../utils/solanaHelper';
 
-console.log("SOLANA_PUBLIC_KEY from environment:", process.env.SOLANA_PUBLIC_KEY);
+// console.log("SOLANA_PUBLIC_KEY from environment:", process.env.SOLANA_PUBLIC_KEY);
 
 type addressesToMint = {
     id: number;
