@@ -1,1 +1,252 @@
-[{"address":"375 Depot Rd, Village of Clarkston, MI 48346, USA","longitude":-83.42003,"latitude":42.734168},{"address":"263 E 4th St, Davison, MI 48423, USA","longitude":-83.515584,"latitude":43.033998},{"address":"317 Shoppers Aly, Davison, MI 48423, USA","longitude":-83.515863,"latitude":43.032245},{"address":"806 N Saginaw St, Holly, MI 48442, USA","longitude":-83.627089,"latitude":42.800411},{"address":"216 S Broad St, Holly, MI 48442, USA","longitude":-83.626643,"latitude":42.790294},{"address":"105 2nd St, Holly, MI 48442, USA","longitude":-83.6315,"latitude":42.79355},{"address":"159 N Main St, Milford, MI 48381, USA","longitude":-83.60106,"latitude":42.58855},{"address":"45255 W 10 Mile Rd, Novi, MI 48375, USA","longitude":-83.491854,"latitude":42.465425},{"address":"11 Pond St, Ortonville, MI 48462, USA","longitude":-83.443693,"latitude":42.852091},{"address":"15 Stanton St, Oxford, MI 48371, USA","longitude":-83.26228,"latitude":42.823883},{"address":"19 W Burdick St, Oxford, MI 48371, USA","longitude":-83.266507,"latitude":42.825098},{"address":"2 Hudson St, Oxford, MI 48371, USA","longitude":-83.265805,"latitude":42.824596},{"address":"31 E Burdick St, Oxford, MI 48371, USA","longitude":-83.264001,"latitude":42.824781},{"address":"415 N Liberty St, Belleville, MI 48111, USA","longitude":-83.489749,"latitude":42.20897},{"address":"167 4th St, Belleville, MI 48111, USA","longitude":-83.491484,"latitude":42.207578},{"address":"4 S Liberty St, Belleville, MI 48111, USA","longitude":-83.484428,"latitude":42.205407},{"address":"539 Savage Rd, Van Buren Charter Township, MI 48111, USA","longitude":-83.477173,"latitude":42.203313},{"address":"118 N State St, Big Rapids, MI 49307, USA","longitude":-85.48324,"latitude":43.69922},{"address":"39400 Woodward Ave, Bloomfield Hills, MI 48304, USA","longitude":-83.240931,"latitude":42.581241},{"address":"29995 W 12 Mile Rd, Farmington Hills, MI 48334, USA","longitude":-83.346472,"latitude":42.498187},{"address":"251 E Grand River Ave, Howell, MI 48843, USA","longitude":-83.925028,"latitude":42.605489},{"address":"27400 Southfield Rd, Lathrup Village, MI 48076, USA","longitude":-83.221377,"latitude":42.491466},{"address":"32777 Five Mile Rd, Livonia, MI 48154, USA","longitude":-83.368076,"latitude":42.396369},{"address":"36230 W Seven Mile Rd, Livonia, MI 48152, USA","longitude":-83.40691,"latitude":42.42539},{"address":"15100 Hubbard St, Livonia, MI 48154, USA","longitude":-83.362314,"latitude":42.396365},{"address":"2795 Seymour Lake Rd, Oxford, MI 48371, USA","longitude":-83.325338,"latitude":42.820621},{"address":"127 N Wells St, South Lyon, MI 48178, USA","longitude":-83.650745,"latitude":42.461448},{"address":"220 Whipple St, South Lyon, MI 48178, USA","longitude":-83.652019,"latitude":42.461489},{"address":"390 S Lafayette St, South Lyon, MI 48178, USA","longitude":-83.651718,"latitude":42.458202},{"address":"502 Washington St, South Lyon, MI 48178, USA","longitude":-83.65277,"latitude":42.456571},{"address":"300 Dorothy St, South Lyon, MI 48178, USA","longitude":-83.653495,"latitude":42.45478},{"address":"24800 Jefferson Ave, St Clair Shores, MI 48080, USA","longitude":-82.886251,"latitude":42.474318},{"address":"20700 Brys Dr, St Clair Shores, MI 48080, USA","longitude":-82.918378,"latitude":42.452826},{"address":"20000 Stephens Rd, St Clair Shores, MI 48080, USA","longitude":-82.914102,"latitude":42.471722},{"address":"22185 Masonic, St Clair Shores, MI 48082, United States","longitude":-82.89476,"latitude":42.533225},{"address":"32400 Jefferson Ave, St Clair Shores, MI 48082, United States","longitude":-82.872539,"latitude":42.527387},{"address":"37500 Schoenherr Rd, Sterling Heights, MI 48312, USA","longitude":-82.988593,"latitude":42.571055},{"address":"12850 15 Mile Rd, Sterling Heights, MI 48312, USA","longitude":-82.996672,"latitude":42.5516},{"address":"40555 Utica Rd, Sterling Heights, MI 48313, USA","longitude":-83.012684,"latitude":42.591758},{"address":"40250 Dodge Park Rd, Sterling Heights, MI 48313, USA","longitude":-83.009983,"latitude":42.590031},{"address":"3001 18 Mile Rd, Sterling Heights, MI 48314, USA","longitude":-83.075802,"latitude":42.597137},{"address":"41625 Ryan Rd, Sterling Heights, MI 48314, USA","longitude":-83.072059,"latitude":42.597852},{"address":"40620 Dodge Park Rd, Sterling Heights, MI 48313, USA","longitude":-83.011152,"latitude":42.591331},{"address":"7200 18 Mile Rd, Sterling Heights, MI 48314, USA","longitude":-83.03701,"latitude":42.5939},{"address":"2775 15 Mile Rd, Sterling Heights, MI 48310, United States","longitude":-83.079561,"latitude":42.552676},{"address":"40200 Utica Rd, Sterling Heights, MI 48313, United States","longitude":-83.00812,"latitude":42.59132},{"address":"107 Ferris St, Ypsilanti, MI 48197, USA","longitude":-83.613924,"latitude":42.23968},{"address":"16 N Adams St, Ypsilanti, MI 48197, USA","longitude":-83.615556,"latitude":42.2417},{"address":"29 N Huron St, Ypsilanti, MI 48197, USA","longitude":-83.613103,"latitude":42.241314},{"address":"100 Market Pl, Ypsilanti, MI 48198, USA","longitude":-83.610112,"latitude":42.246777}]
+[
+    {
+        "address": "375 Depot Rd, Village of Clarkston, MI 48346, USA",
+        "longitude": -83.42003,
+        "latitude": 42.734168
+    },
+    {
+        "address": "263 E 4th St, Davison, MI 48423, USA",
+        "longitude": -83.515806,
+        "latitude": 43.03388
+    },
+    {
+        "address": "317 Shoppers Aly, Davison, MI 48423, USA",
+        "longitude": -83.515863,
+        "latitude": 43.032245
+    },
+    {
+        "address": "806 N Saginaw St, Holly, MI 48442, USA",
+        "longitude": -83.627135,
+        "latitude": 42.800391
+    },
+    {
+        "address": "216 S Broad St, Holly, MI 48442, USA",
+        "longitude": -83.626636,
+        "latitude": 42.790283
+    },
+    {
+        "address": "105 2nd St, Holly, MI 48442, USA",
+        "longitude": -83.6315,
+        "latitude": 42.79355
+    },
+    {
+        "address": "159 N Main St, Milford, MI 48381, USA",
+        "longitude": -83.60106,
+        "latitude": 42.58855
+    },
+    {
+        "address": "45255 W 10 Mile Rd, Novi, MI 48375, USA",
+        "longitude": -83.491854,
+        "latitude": 42.465425
+    },
+    {
+        "address": "11 Pond St, Ortonville, MI 48462, USA",
+        "longitude": -83.443775,
+        "latitude": 42.852037
+    },
+    {
+        "address": "15 Stanton St, Oxford, MI 48371, USA",
+        "longitude": -83.26228,
+        "latitude": 42.823883
+    },
+    {
+        "address": "19 W Burdick St, Oxford, MI 48371, USA",
+        "longitude": -83.266506,
+        "latitude": 42.825096
+    },
+    {
+        "address": "2 Hudson St, Oxford, MI 48371, USA",
+        "longitude": -83.265805,
+        "latitude": 42.824596
+    },
+    {
+        "address": "31 E Burdick St, Oxford, MI 48371, USA",
+        "longitude": -83.264001,
+        "latitude": 42.824781
+    },
+    {
+        "address": "415 N Liberty St, Belleville, MI 48111, USA",
+        "longitude": -83.489749,
+        "latitude": 42.20897
+    },
+    {
+        "address": "167 4th St, Belleville, MI 48111, USA",
+        "longitude": -83.491091,
+        "latitude": 42.207402
+    },
+    {
+        "address": "4 S Liberty St, Belleville, MI 48111, USA",
+        "longitude": -83.484428,
+        "latitude": 42.205407
+    },
+    {
+        "address": "539 Savage Rd, Van Buren Charter Township, MI 48111, USA",
+        "longitude": -83.439981,
+        "latitude": 42.218371
+    },
+    {
+        "address": "118 N State St, Big Rapids, MI 49307, USA",
+        "longitude": -85.48324,
+        "latitude": 43.69922
+    },
+    {
+        "address": "39400 Woodward Ave, Bloomfield Hills, MI 48304, USA",
+        "longitude": -83.240866,
+        "latitude": 42.581275
+    },
+    {
+        "address": "29995 W 12 Mile Rd, Farmington Hills, MI 48334, USA",
+        "longitude": -83.346401,
+        "latitude": 42.49809
+    },
+    {
+        "address": "251 E Grand River Ave, Howell, MI 48843, USA",
+        "longitude": -83.924794,
+        "latitude": 42.605405
+    },
+    {
+        "address": "27400 Southfield Rd, Lathrup Village, MI 48076, USA",
+        "longitude": -83.22136,
+        "latitude": 42.491468
+    },
+    {
+        "address": "32777 Five Mile Rd, Livonia, MI 48154, USA",
+        "longitude": -83.368129,
+        "latitude": 42.396262
+    },
+    {
+        "address": "36230 W Seven Mile Rd, Livonia, MI 48152, USA",
+        "longitude": -83.391705,
+        "latitude": 42.429013
+    },
+    {
+        "address": "15100 Hubbard St, Livonia, MI 48154, USA",
+        "longitude": -83.362395,
+        "latitude": 42.39632
+    },
+    {
+        "address": "2795 Seymour Lake Rd, Oxford, MI 48371, USA",
+        "longitude": -83.325346,
+        "latitude": 42.820625
+    },
+    {
+        "address": "127 N Wells St, South Lyon, MI 48178, USA",
+        "longitude": -83.650745,
+        "latitude": 42.461448
+    },
+    {
+        "address": "220 Whipple St, South Lyon, MI 48178, USA",
+        "longitude": -83.652019,
+        "latitude": 42.461489
+    },
+    {
+        "address": "390 S Lafayette St, South Lyon, MI 48178, USA",
+        "longitude": -83.651683,
+        "latitude": 42.458083
+    },
+    {
+        "address": "502 Washington St, South Lyon, MI 48178, USA",
+        "longitude": -83.65277,
+        "latitude": 42.456571
+    },
+    {
+        "address": "300 Dorothy St, South Lyon, MI 48178, USA",
+        "longitude": -83.653436,
+        "latitude": 42.454954
+    },
+    {
+        "address": "24800 Jefferson Ave, St Clair Shores, MI 48080, USA",
+        "longitude": -82.886325,
+        "latitude": 42.474339
+    },
+    {
+        "address": "20700 Brys Dr, St Clair Shores, MI 48080, USA",
+        "longitude": -82.897674,
+        "latitude": 42.466498
+    },
+    {
+        "address": "20000 Stephens Rd, St Clair Shores, MI 48080, USA",
+        "longitude": -82.914183,
+        "latitude": 42.471839
+    },
+    {
+        "address": "22185 Masonic, St Clair Shores, MI 48082, United States",
+        "longitude": -82.894776,
+        "latitude": 42.53318
+    },
+    {
+        "address": "32400 Jefferson Ave, St Clair Shores, MI 48082, United States",
+        "longitude": -82.872407,
+        "latitude": 42.527235
+    },
+    {
+        "address": "37500 Schoenherr Rd, Sterling Heights, MI 48312, USA",
+        "longitude": -82.98863,
+        "latitude": 42.57107
+    },
+    {
+        "address": "12850 15 Mile Rd, Sterling Heights, MI 48312, USA",
+        "longitude": -82.99665,
+        "latitude": 42.55157
+    },
+    {
+        "address": "40555 Utica Rd, Sterling Heights, MI 48313, USA",
+        "longitude": -83.012474,
+        "latitude": 42.590184
+    },
+    {
+        "address": "40250 Dodge Park Rd, Sterling Heights, MI 48313, USA",
+        "longitude": -83.00999,
+        "latitude": 42.589965
+    },
+    {
+        "address": "3001 18 Mile Rd, Sterling Heights, MI 48314, USA",
+        "longitude": -83.075805,
+        "latitude": 42.597138
+    },
+    {
+        "address": "41625 Ryan Rd, Sterling Heights, MI 48314, USA",
+        "longitude": -83.072152,
+        "latitude": 42.59782
+    },
+    {
+        "address": "40620 Dodge Park Rd, Sterling Heights, MI 48313, USA",
+        "longitude": -83.011152,
+        "latitude": 42.591325
+    },
+    {
+        "address": "7200 18 Mile Rd, Sterling Heights, MI 48314, USA",
+        "longitude": -83.03706,
+        "latitude": 42.594006
+    },
+    {
+        "address": "2775 15 Mile Rd, Sterling Heights, MI 48310, United States",
+        "longitude": -83.079561,
+        "latitude": 42.552676
+    },
+    {
+        "address": "40200 Utica Rd, Sterling Heights, MI 48313, United States",
+        "longitude": -83.008236,
+        "latitude": 42.591339
+    },
+    {
+        "address": "107 Ferris St, Ypsilanti, MI 48197, USA",
+        "longitude": -83.613565,
+        "latitude": 42.24018
+    },
+    {
+        "address": "16 N Adams St, Ypsilanti, MI 48197, USA",
+        "longitude": -83.615556,
+        "latitude": 42.2417
+    },
+    {
+        "address": "29 N Huron St, Ypsilanti, MI 48197, USA",
+        "longitude": -83.613103,
+        "latitude": 42.241314
+    },
+    {
+        "address": "100 Market Pl, Ypsilanti, MI 48198, USA",
+        "longitude": -83.61014,
+        "latitude": 42.2468
+    }
+]
