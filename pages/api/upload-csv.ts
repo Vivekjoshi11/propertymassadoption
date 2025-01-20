@@ -101,7 +101,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
     fs.writeFileSync(destinationFilePath, JSON.stringify(addresses, null, 2));
 
-    sendEvent('Running 1-getCoOrdinates.js...');
+    console.log('CSV addresses saved to:', destinationFilePath);
+
+    // Step 3: Execute scripts with retries
+    console.log('Step 1: Running 1-getCoOrdinates.js...');
     await retryOperation(() => runScript('./src/scripts/1-getCoOrdinates.ts'), 3, 5000);
     console.log('Step 1 completed.');
 
