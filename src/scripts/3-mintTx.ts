@@ -1,7 +1,4 @@
-
-
-
-
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { PublicKey } from '@solana/web3.js';
 import { configs } from '../configs';
 import {
@@ -13,70 +10,33 @@ import { join } from 'path';
 import { readFileSync, writeFileSync } from 'fs';
 import { decode } from '@coral-xyz/anchor/dist/cjs/utils/bytes/bs58';
 import { umi } from '../utils/solanaHelper';
-
-console.log("SOLANA_PUBLIC_KEY from environment:", process.env.SOLANA_PUBLIC_KEY);
-
-type addressesToMint = {
-    id: number;
-    address: string;
-    owner: {
-        blockchainAddress: string;
-    };
-    longitude: number;
-    latitude: number;
-};
-
-type signatures = {
-    id: number;
-    address: string;
-    owner: {
-        blockchainAddress: string;
-    };
-    longitude: number;
-    latitude: number;
-    signature: string;
-    confirmed: boolean;
-    layerAdded: boolean;
-};
-
-async function checkUniqueAddress(
-    addressesToMint: Array<addressesToMint>,
-    allSigs: Array<signatures>
-) {
-    const ans: addressesToMint[] = [];
-    for (const addToMint of addressesToMint) {
-        const existingSig = allSigs.find(sig => sig.id === addToMint.id);
-
-        if (!existingSig || existingSig.signature === 'failed' || !existingSig.confirmed) {
-            ans.push(addToMint);
-        }
-    }
-    return ans;
-}
+import {
+    AddressesToMint,
+    Signatures,
+    RetryEntry,
+    RecheckEntry,
+    FailedTx, // New type
+} from '../utils/types';
 
 async function main() {
-    // Load initial data
-    const addressesToMint: addressesToMint[] = JSON.parse(
+    const addressesToMint: AddressesToMint[] = JSON.parse(
         readFileSync(join(__dirname, '../result/dbPropertiesTomint.json'), 'utf-8')
     );
 
-    const successCases: any[] = [];
-    let recheck: any[] = [];
-    let retries: any[] = [];
+    const successCases: RetryEntry[] = [];
+    let recheck: RecheckEntry[] = [];
+    let retries: RetryEntry[] = [];
+    const failedTx: FailedTx[] = []; // Array to store permanently failed transactions
 
-    const actuallyMint = async (entry: any) => {
+    const retryCountMap: Map<string, number> = new Map(); // Track retry counts by address
+
+    const actuallyMint = async (entry: AddressesToMint) => {
         try {
-            // Mint token
             const pinataMetadata = await getMetaDataObject(entry.address);
             const cid = await pinFilesToIPFS(pinataMetadata);
 
             if (!cid) {
-                retries.push({
-                    ...entry,
-                    signature: null,
-                    status: 'failed',
-                    createdAt: new Date().toISOString(),
-                });
+                handleFailedRetry(entry, null);
                 return;
             }
 
@@ -96,28 +56,40 @@ async function main() {
             );
 
             if (res.status === 'failed') {
-                retries.push({
-                    ...entry,
-                    signature: res.signature,
-                    status: res.status,
-                    createdAt: new Date().toISOString(),
-                });
+                handleFailedRetry(entry, res.signature);
             } else {
                 recheck.push({
                     ...entry,
                     signature: res.signature,
-                    status: res.status,
+                    status: 'success',
                     createdAt: new Date().toISOString(),
                 });
             }
         } catch (err) {
             console.error(err);
+            handleFailedRetry(entry, null);
+        }
+    };
+
+    const handleFailedRetry = (entry: AddressesToMint, signature: string | null) => {
+        const retryCount = retryCountMap.get(entry.address) || 0;
+
+        if (retryCount >= 3) {
+            // Convert entry.id to a string before adding to failedTx
+            failedTx.push({
+                ...entry,
+                signature,
+                createdAt: new Date().toISOString(),
+                id: String(entry.id), // Convert id to string here
+            });
+        } else {
             retries.push({
                 ...entry,
-                signature: null,
+                signature,
                 status: 'failed',
                 createdAt: new Date().toISOString(),
             });
+            retryCountMap.set(entry.address, retryCount + 1);
         }
     };
 
@@ -127,7 +99,7 @@ async function main() {
 
         for (const check of pendingRecheck) {
             if (!check.signature) {
-                retries.push(check);
+                handleFailedRetry(check, null);
                 continue;
             }
 
@@ -139,7 +111,7 @@ async function main() {
                 const now = new Date();
                 if (!tx0) {
                     if (now.getTime() - new Date(check.createdAt).getTime() > 7 * 60 * 1000) {
-                        retries.push(check);
+                        handleFailedRetry(check, check.signature);
                     } else {
                         recheck.push(check);
                     }
@@ -148,6 +120,7 @@ async function main() {
                 }
             } catch (err) {
                 recheck.push(check);
+                console.log(err)
             }
         }
     };
@@ -183,6 +156,10 @@ async function main() {
     writeFileSync(
         join(__dirname, '../result/retry.json'),
         JSON.stringify(retries, null, 2)
+    );
+    writeFileSync(
+        join(__dirname, '../result/failed-txs.json'),
+        JSON.stringify(failedTx, null, 2)
     );
 
     console.log('Minting process complete.');

@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from 'axios'
 import 'dotenv/config'
 import { readFileSync, writeFileSync } from 'fs'
 import { findLeafAssetIdPda } from '@metaplex-foundation/mpl-bubblegum'
 import {
+    AccountInfo,
     ComputeBudgetProgram,
     Connection,
     Keypair,
@@ -70,11 +73,14 @@ console.log(centralizedAccountKeypair.publicKey, NonceAccountKeypair.publicKey)
 
 const wallet = new Wallet(centralizedAccountKeypair)
 
-const connection = new Connection(configs.RPC_URL)
+// const connection = new Connection(configs.RPC_URL)
+const connection = new Connection(process.env.RPC_URL as string);
 
 const provider = new AnchorProvider(connection, wallet, {})
 
 const umi = createUmi(provider.connection.rpcEndpoint).use(mplBubblegum())
+// const umi = createUmi('https://api.devnet.solana.com').use(mplBubblegum());
+
 
 umi.use(
     signerIdentity(
@@ -99,6 +105,7 @@ export async function getMetaDataObject(address: string) {
             propertyStatusId: 0,
         },
     })
+    console.log('Property metadata input:', property);
 
     if (!property) {
         throw Error('property already verified or doesnt exist')
@@ -144,33 +151,75 @@ export async function getMetaDataObject(address: string) {
     return offChainMetadata
 }
 
+// export async function fetchNonce(
+//     nonceAccountAddress: PublicKey,
+//     previousBlockhash: string
+// ) {
+//     console.log({ previousBlockhash })
+//     let nonceAccount = undefined
+//     let c = 0
+//     let isLoop = true
+//     while (isLoop) {
+//         await new Promise((resolve) => setTimeout(resolve, 2000))
+//         c++
+//         if (c >= 150) {
+//             break
+//         }
+//         nonceAccount = await connection.getAccountInfo(nonceAccountAddress)
+//         if (!nonceAccount) {
+//             continue
+//         }
+//         const nonce = NonceAccount.fromAccountData(nonceAccount?.data as Buffer)
+//         if (nonce.nonce != previousBlockhash) {
+//             isLoop = false
+//             return { nonce, previousBlockhash }
+//         }
+//         //sleep for 2s
+//         console.log('sleeps for 2')
+//     }
+// }
+
 export async function fetchNonce(
     nonceAccountAddress: PublicKey,
     previousBlockhash: string
 ) {
-    console.log({ previousBlockhash })
-    let nonceAccount = undefined
-    let c = 0
-    let isLoop = true
+    console.log({ previousBlockhash });
+    let nonceAccount: AccountInfo<Buffer> | null = null; // Explicitly type as AccountInfo<Buffer> or null
+    let c = 0;
+    let isLoop = true;
+
     while (isLoop) {
-        await new Promise((resolve) => setTimeout(resolve, 2000))
-        c++
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        c++;
+
         if (c >= 150) {
-            break
+            break;
         }
-        nonceAccount = await connection.getAccountInfo(nonceAccountAddress)
+
+        nonceAccount = await connection.getAccountInfo(nonceAccountAddress);
+
+        // Check if nonceAccount is null or undefined
         if (!nonceAccount) {
-            continue
+            console.log('Account info not found, retrying...');
+            continue; // Retry if nonceAccount is not found
         }
-        const nonce = NonceAccount.fromAccountData(nonceAccount?.data as Buffer)
-        if (nonce.nonce != previousBlockhash) {
-            isLoop = false
-            return { nonce, previousBlockhash }
+
+        // Now safely access the `data` property
+        const nonce = NonceAccount.fromAccountData(nonceAccount.data as Buffer);
+
+        // Check if nonce is different from previousBlockhash
+        if (nonce.nonce !== previousBlockhash) {
+            isLoop = false;
+            return { nonce, previousBlockhash };
         }
-        //sleep for 2s
-        console.log('sleeps for 2')
+
+        console.log('Sleeping for 2 seconds...');
     }
+
+    // In case the loop exits without finding a valid nonce
+    return { nonce: null, previousBlockhash };
 }
+
 export async function doNonceAdvanceTX(previousBlockhash: string) {
     let isLoop = true
     do {
@@ -226,6 +275,7 @@ export const convertToTx = async (
     return { transaction, previousBlockhash: previousBlockhash }
 }
 
+
 export const pinFilesToIPFS = async (metadata: any) => {
     const WEB_STORAGE_TOKEN = process.env.WEB_STORAGE_TOKEN
 
@@ -246,6 +296,7 @@ export const pinFilesToIPFS = async (metadata: any) => {
 
     const res = await axios.post(
         'https://api.pinata.cloud/pinning/pinJSONToIPFS',
+        
         data,
         {
             headers: {
@@ -296,7 +347,10 @@ export async function MintTokenSendAndConfirm(
 
     const collectionMint = new PublicKey(
         configs.COLLECTION_MINT_ADDRESS as string
+        
     )
+    console.log("Public key input:", collectionMint);
+
 
     const [collectionMetadata] = findMetadataPda(umi, {
         mint: publicKey(collectionMint),

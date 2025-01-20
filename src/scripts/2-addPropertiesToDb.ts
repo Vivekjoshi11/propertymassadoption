@@ -1,4 +1,5 @@
-import { PrismaClient } from '@prisma/client'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { PrismaClient, Prisma } from '@prisma/client'
 import { readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
 import 'dotenv/config'
@@ -6,7 +7,8 @@ import 'dotenv/config'
 const prisma = new PrismaClient()
 
 async function addProperties() {
-    const prismaTx: Array<any> = []
+    const prismaTx: Array<Prisma.PrismaPromise<any>> = []  
+
     const addressesToStoreInDb: Array<{
         address: string
         longitude: number
@@ -21,7 +23,6 @@ async function addProperties() {
     for (let i = 0; i < addressesToStoreInDb.length; i++) {
         const { address, latitude, longitude } = addressesToStoreInDb[i]
 
-        // Fetch owner details based on ownerId (from environment variable)
         const owner = await prisma.user.findUnique({
             where: { id: parseInt(process.env.OWNERID as string) },
             select: { blockchainAddress: true }
@@ -100,15 +101,16 @@ async function addProperties() {
                 latitude,
                 longitude,
                 vertexes: { create: [{ latitude, longitude }] },
+                propertyStatusId: 1,
             },
         })
+
         prismaTx.push(data)
     }
 
     try {
         const ans = await prisma.$transaction(prismaTx)
 
-        // Now structure the output in the required format:
         const formattedResult = ans.map((property: any) => ({
             id: property.id,
             address: property.address,
@@ -120,10 +122,9 @@ async function addProperties() {
         }))
         console.log(formattedResult)
 
-        // Write the result to a file in the desired format
         writeFileSync(
             join(__dirname, '../result/dbPropertiesTomint.json'),
-            JSON.stringify(formattedResult, null, 2) // pretty print with 2 spaces indentation
+            JSON.stringify(formattedResult, null, 2) 
         )
         console.log('Properties added and saved successfully');
     } catch (error) {
@@ -138,8 +139,8 @@ async function main() {
 
 main()
     .then(() => {
-        console.log('script passed')
+        console.log('Script passed')
     })
     .catch((err) => {
-        console.log('error occurred', err)
+        console.log('Error occurred', err)
     })
