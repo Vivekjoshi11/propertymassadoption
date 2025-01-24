@@ -73,13 +73,11 @@ console.log(centralizedAccountKeypair.publicKey, NonceAccountKeypair.publicKey)
 
 const wallet = new Wallet(centralizedAccountKeypair)
 
-// const connection = new Connection(configs.RPC_URL)
 const connection = new Connection(process.env.RPC_URL as string);
 
 const provider = new AnchorProvider(connection, wallet, {})
 
 const umi = createUmi(provider.connection.rpcEndpoint).use(mplBubblegum())
-// const umi = createUmi('https://api.devnet.solana.com').use(mplBubblegum());
 
 
 umi.use(
@@ -151,33 +149,6 @@ export async function getMetaDataObject(address: string) {
     return offChainMetadata
 }
 
-// export async function fetchNonce(
-//     nonceAccountAddress: PublicKey,
-//     previousBlockhash: string
-// ) {
-//     console.log({ previousBlockhash })
-//     let nonceAccount = undefined
-//     let c = 0
-//     let isLoop = true
-//     while (isLoop) {
-//         await new Promise((resolve) => setTimeout(resolve, 2000))
-//         c++
-//         if (c >= 150) {
-//             break
-//         }
-//         nonceAccount = await connection.getAccountInfo(nonceAccountAddress)
-//         if (!nonceAccount) {
-//             continue
-//         }
-//         const nonce = NonceAccount.fromAccountData(nonceAccount?.data as Buffer)
-//         if (nonce.nonce != previousBlockhash) {
-//             isLoop = false
-//             return { nonce, previousBlockhash }
-//         }
-//         //sleep for 2s
-//         console.log('sleeps for 2')
-//     }
-// }
 
 export async function fetchNonce(
     nonceAccountAddress: PublicKey,
@@ -508,7 +479,6 @@ export const findLeafIndexFromUmiTx = (txInfo: TransactionWithMeta | null) => {
     console.log('assetId', assetId)
     console.log('Token(s) minted successfully!')
 
-    //
     return assetId
 }
 
