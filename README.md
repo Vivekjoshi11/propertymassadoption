@@ -42,14 +42,9 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 Script Instructions
 This guide explains how to use the scripts to process a .csv file and submit the data. Follow the steps below for a smooth workflow.
 
-Prerequisites
-Node.js installed (v14 or later).
-A valid .env file containing the required credentials.
-Access to the .csv file that follows the required format (details below).
-Steps to Use
-Prepare the CSV File
-
-Ensure your .csv file is formatted correctly. See CSV Format for details.
+Prerequisites:
+1) Prepare the CSV File 
+2) Ensure your .csv file is formatted correctly. See CSV Format for details.
 Run the Script
 
 Open the application.
@@ -64,14 +59,16 @@ Check the Results
 If successful, the application will display a success message with relevant details.
 In case of errors, review the logs displayed in the terminal or console for troubleshooting.
 CSV Format
-The .csv file must follow this format:
 
+
+The .csv file must follow this format:
 address
 123 Example St, NY, USA
 456 Another Rd, LA, USA
-Example File:
-csv
 
+
+Example File:
+csv 
 address
 123 Example St, NY, USA
 456 Another Rd, LA, USA
