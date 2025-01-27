@@ -61,18 +61,19 @@ In case of errors, review the logs displayed in the terminal or console for trou
 CSV Format
 
 
-The .csv file must follow this format:
-address
-123 Example St, NY, USA
-456 Another Rd, LA, USA
+The .csv file must follow this format: address and userEmail is mandatory now
+address,userEmail
+123 Example St, NY, USA,john.doe@example.com
+456 Another Rd, LA, USA,jane.doe@example.com
+
 
 
 Example File:
 csv 
-address
-123 Example St, NY, USA
-456 Another Rd, LA, USA
-789 Sample Ave, SF, USA
+address,userEmail
+123 Example St, NY, USA,jane.doe@example.com
+456 Another Rd, LA, USA,jane.doe@example.com
+789 Sample Ave, SF, USA,jane.doe@example.com
 Note: The address column is mandatory, and each row must contain a valid address. Ensure the file is saved in .csv format.
 
 Expected Outputs
