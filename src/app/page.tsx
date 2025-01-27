@@ -112,7 +112,7 @@ export default function Home() {
           <button
             className="ml-auto py-1 px-4 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700"
             onClick={() =>
-              document.querySelector('input[type="file"]')?.click()
+              (document.querySelector('input[type="file"]') as HTMLInputElement)?.click()
             }
           >
             Choose File

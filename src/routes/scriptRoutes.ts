@@ -4,21 +4,18 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 import csvParser from 'csv-parser';
-import { runScript } from '@/utils/runScript'; // Adjust path as needed
+import { runScript } from '@/utils/runScript'; 
 import { NextApiRequest, NextApiResponse } from 'next';
 import nextConnect from 'next-connect';
 
-// Configure Multer
 const upload = multer({ dest: 'src/uploads/' });
 
-// Create a custom type for NextApiRequest to include 'file'
 interface CustomNextApiRequest extends NextApiRequest {
   file?: Express.Multer.File;
 }
 
 const handler = nextConnect<CustomNextApiRequest, NextApiResponse>();
 
-// Use multer middleware
 handler.use(upload.single('file'));
 
 handler.post(async (req:CustomNextApiRequest, res: NextApiResponse) => {
