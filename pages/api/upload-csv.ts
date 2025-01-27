@@ -94,7 +94,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).json({ message: 'No addresses found in the CSV file!' });
     }
 
-    const destinationDirectory = path.join(process.cwd(), 'inputFiles');
+    const destinationDirectory = path.join(process.cwd(), 'src/inputFiles');
     const destinationFilePath = path.join(destinationDirectory, 'allAddress.json');
     if (!fs.existsSync(destinationDirectory)) {
       fs.mkdirSync(destinationDirectory, { recursive: true });
