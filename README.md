@@ -37,7 +37,7 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Script Instructions
 This guide explains how to use the scripts to process a .csv file and submit the data. Follow the steps below for a smooth workflow.
@@ -71,8 +71,7 @@ address
 456 Another Rd, LA, USA
 Example File:
 csv
-Copy
-Edit
+
 address
 123 Example St, NY, USA
 456 Another Rd, LA, USA
@@ -81,8 +80,14 @@ Note: The address column is mandatory, and each row must contain a valid address
 
 Expected Outputs
 Success:
-A message confirming successful processing will be displayed, along with any relevant details (e.g., CID of files uploaded to IPFS).
+A message confirming successful processing will be displayed. and one message will wrtten their like file has been uploaded successfully.
 
 Error:
 If any issues occur (e.g., invalid file format, missing data), the system will display error logs for troubleshooting.
+
+images of working model:
+
+![step1](![alt text](image-1.png))
+![step2](![alt text](image-2.png))
+![step3](image.png)
 
