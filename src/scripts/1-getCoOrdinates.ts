@@ -11,17 +11,18 @@ interface AddressData {
 }
 
 async function main() {
-    const allAddress: Array<string> = JSON.parse(
+    const allRecords: Array<{ address: string; userEmail: string }> = JSON.parse(
         readFileSync(
-            join(__dirname, '../inputFiles/allAddress.json'),
+            join(__dirname, '../inputFiles/allAddress.json'), 
             'utf-8'
         )
     )
 
     const addressesToAddToDb: AddressData[] = []
 
-    for (let i = 0; i < allAddress.length; i++) {
-        const address = allAddress[i]
+    for (let i = 0; i < allRecords.length; i++) {
+        const record = allRecords[i]
+        const address = record.address 
         const utf8Address = utf8.encode(address)
         const urlAddress = encode(utf8Address)
         console.log('--------------sending request ', i)
@@ -36,8 +37,8 @@ async function main() {
 
             const result: AddressData = {
                 address: address,
-                longitude: geoLo ? geoLo[0] : 'ZeroAddress',  
-                latitude: geoLo ? geoLo[1] : 'ZeroAddress', 
+                longitude: geoLo ? geoLo[0] : 'ZeroAddress', 
+                latitude: geoLo ? geoLo[1] : 'ZeroAddress',  
             }
             addressesToAddToDb.push(result)
         } catch (error) {

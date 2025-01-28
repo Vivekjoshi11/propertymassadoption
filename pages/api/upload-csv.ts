@@ -49,7 +49,7 @@ async function retryOperation<T>(
       lastError = error;
       if (attempt < retries) {
         console.log(`Retry attempt ${attempt} failed, retrying...`);
-        await new Promise(resolve => setTimeout(resolve, delay)); 
+        await new Promise(resolve => setTimeout(resolve, delay)); // Delay before retrying
       }
     }
   }
@@ -69,7 +69,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   const uploadedFilePath = file.path;
-  const addresses: string[] = [];
+  
+  const records: { address: string; userEmail: string }[] = [];
 
   try {
     await retryOperation(() => new Promise<void>((resolve, reject) => {
@@ -77,20 +78,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         .pipe(csvParser())
         .on('data', (row) => {
           const address = row['Address'] || row['address'] || row['ADDRESS'];
-          if (address) {
-            addresses.push(address);
+          if (!address) {
+            reject(new Error('Mandatory field "address" is missing in one or more rows.'));
           }
-    
-          const userEmail = row['userEmail']|| row['useremail'] || row['UserEmail'];
+          const userEmail = row['userEmail'] || row['useremail'] || row['UserEmail'];
           if (!userEmail) {
-            reject(new Error('Mandatory field "usreemail" is missing in one or more rows.'));
+            reject(new Error('Mandatory field "userEmail" is missing in one or more rows.'));
           }
+
+          records.push({ address, userEmail });
         })
         .on('end', resolve)
         .on('error', reject);
-    }), 3, 5000); 
+    }), 3, 5000);
 
-    if (addresses.length === 0) {
+    if (records.length === 0) {
       return res.status(400).json({ message: 'No addresses found in the CSV file!' });
     }
 
@@ -99,9 +101,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (!fs.existsSync(destinationDirectory)) {
       fs.mkdirSync(destinationDirectory, { recursive: true });
     }
-    fs.writeFileSync(destinationFilePath, JSON.stringify(addresses, null, 2));
+    fs.writeFileSync(destinationFilePath, JSON.stringify(records, null, 2));
 
-    console.log('CSV addresses saved to:', destinationFilePath);
+    console.log('CSV records saved to:', destinationFilePath);
 
     console.log('Step 1: Running 1-getCoOrdinates.js...');
     await retryOperation(() => runScript('./src/scripts/1-getCoOrdinates.ts'), 3, 5000);
@@ -130,3 +132,4 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     fs.unlinkSync(uploadedFilePath);
   }
 }
+
