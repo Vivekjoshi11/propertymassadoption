@@ -27,7 +27,6 @@ function runMiddleware(req: NextApiRequest, res: NextApiResponse, fn: Function) 
   });
 }
 
-// Function to log errors to a file
 function logErrorToFile(error: any) {
   const logFilePath = path.join(process.cwd(), 'errorLogs', 'log.txt');
   if (!fs.existsSync(path.dirname(logFilePath))) {
@@ -37,11 +36,10 @@ function logErrorToFile(error: any) {
   fs.appendFileSync(logFilePath, errorMessage);
 }
 
-// Retry function to handle retries for critical operations
 async function retryOperation<T>(
   operation: () => Promise<T>,
   retries: number = 3,
-  delay: number = 3000 // delay between retries in ms
+  delay: number = 3000 
 ): Promise<T> {
   let lastError: any;
   for (let attempt = 1; attempt <= retries; attempt++) {
@@ -71,39 +69,42 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   const uploadedFilePath = file.path;
-  const addresses: string[] = [];
+  
+  const records: { address: string; userEmail: string }[] = [];
 
   try {
-    // Step 1: Retry parsing CSV file to handle possible failures
     await retryOperation(() => new Promise<void>((resolve, reject) => {
       fs.createReadStream(uploadedFilePath)
         .pipe(csvParser())
         .on('data', (row) => {
-          // console.log('Parsed row:', row);
           const address = row['Address'] || row['address'] || row['ADDRESS'];
-          if (address) {
-            addresses.push(address);
+          if (!address) {
+            reject(new Error('Mandatory field "address" is missing in one or more rows.'));
           }
+          const userEmail = row['userEmail'] || row['useremail'] || row['UserEmail'];
+          if (!userEmail) {
+            reject(new Error('Mandatory field "userEmail" is missing in one or more rows.'));
+          }
+
+          records.push({ address, userEmail });
         })
         .on('end', resolve)
         .on('error', reject);
-    }), 3, 5000); 
+    }), 3, 5000);
 
-    if (addresses.length === 0) {
+    if (records.length === 0) {
       return res.status(400).json({ message: 'No addresses found in the CSV file!' });
     }
 
-    // Step 2: Retry saving addresses to JSON
-    const destinationDirectory = path.join(process.cwd(), 'inputFiles');
+    const destinationDirectory = path.join(process.cwd(), 'src/inputFiles');
     const destinationFilePath = path.join(destinationDirectory, 'allAddress.json');
     if (!fs.existsSync(destinationDirectory)) {
       fs.mkdirSync(destinationDirectory, { recursive: true });
     }
-    fs.writeFileSync(destinationFilePath, JSON.stringify(addresses, null, 2));
+    fs.writeFileSync(destinationFilePath, JSON.stringify(records, null, 2));
 
-    console.log('CSV addresses saved to:', destinationFilePath);
+    console.log('CSV records saved to:', destinationFilePath);
 
-    // Step 3: Execute scripts with retries
     console.log('Step 1: Running 1-getCoOrdinates.js...');
     await retryOperation(() => runScript('./src/scripts/1-getCoOrdinates.ts'), 3, 5000);
     console.log('Step 1 completed.');
@@ -131,3 +132,4 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     fs.unlinkSync(uploadedFilePath);
   }
 }
+

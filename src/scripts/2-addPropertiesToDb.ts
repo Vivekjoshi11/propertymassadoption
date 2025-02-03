@@ -13,6 +13,7 @@ async function addProperties() {
         address: string
         longitude: number
         latitude: number
+        userEmail: string 
     }> = JSON.parse(
         readFileSync(
             join(__dirname, '../result/propertiesToAddToDb.json'),
@@ -21,16 +22,16 @@ async function addProperties() {
     )
 
     for (let i = 0; i < addressesToStoreInDb.length; i++) {
-        const { address, latitude, longitude } = addressesToStoreInDb[i]
+        const { address, latitude, longitude, userEmail } = addressesToStoreInDb[i] 
 
         const owner = await prisma.user.findUnique({
-            where: { id: parseInt(process.env.OWNERID as string) },
-            select: { blockchainAddress: true }
+            where: { email: userEmail }, 
+            select: { id: true, blockchainAddress: true } 
         })
 
         if (!owner) {
-            console.log('Owner not found');
-            continue;
+            console.log(`Owner not found for email: ${userEmail}`)
+            continue
         }
 
         const data = prisma.property.create({
@@ -97,7 +98,7 @@ async function addProperties() {
                         },
                     ],
                 },
-                ownerId: parseInt(process.env.OWNERID as string),
+                ownerId: owner.id,
                 latitude,
                 longitude,
                 vertexes: { create: [{ latitude, longitude }] },
@@ -126,7 +127,7 @@ async function addProperties() {
             join(__dirname, '../result/dbPropertiesTomint.json'),
             JSON.stringify(formattedResult, null, 2) 
         )
-        console.log('Properties added and saved successfully');
+        console.log('Properties added and saved successfully')
     } catch (error) {
         console.log('Prisma transaction failed', error)
         throw new Error('Prisma transaction failed')

@@ -8,10 +8,11 @@ interface AddressData {
     address: string;
     longitude: string | number;
     latitude: string | number;
+    userEmail: string;
 }
 
 async function main() {
-    const allAddress: Array<string> = JSON.parse(
+    const allRecords: Array<{ address: string; userEmail: string }> = JSON.parse(
         readFileSync(
             join(__dirname, '../inputFiles/allAddress.json'),
             'utf-8'
@@ -20,8 +21,10 @@ async function main() {
 
     const addressesToAddToDb: AddressData[] = []
 
-    for (let i = 0; i < allAddress.length; i++) {
-        const address = allAddress[i]
+    for (let i = 0; i < allRecords.length; i++) {
+        const record = allRecords[i]
+        const address = record.address 
+        const userEmail = record.userEmail
         const utf8Address = utf8.encode(address)
         const urlAddress = encode(utf8Address)
         console.log('--------------sending request ', i)
@@ -36,8 +39,9 @@ async function main() {
 
             const result: AddressData = {
                 address: address,
-                longitude: geoLo ? geoLo[0] : 'ZeroAddress',  
-                latitude: geoLo ? geoLo[1] : 'ZeroAddress', 
+                longitude: geoLo ? geoLo[0] : 'ZeroAddress',
+                latitude: geoLo ? geoLo[1] : 'ZeroAddress',
+                userEmail: userEmail
             }
             addressesToAddToDb.push(result)
         } catch (error) {
@@ -46,18 +50,20 @@ async function main() {
                 address: address,
                 longitude: 'ZeroAddress',
                 latitude: 'ZeroAddress',
+                userEmail: userEmail 
             }
             addressesToAddToDb.push(result)
         }
 
-        await new Promise((_) => setTimeout(_, 1000))
+        await new Promise((resolve) => setTimeout(resolve, 1000))
     }
 
+    // Log the total number of addresses processed
     console.log('Total addresses processed:', addressesToAddToDb.length)
 
     writeFileSync(
         join(__dirname, '../result/propertiesToAddToDb.json'),
-        JSON.stringify(addressesToAddToDb)
+        JSON.stringify(addressesToAddToDb, null, 2)
     )
 }
 
